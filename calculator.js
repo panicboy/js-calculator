@@ -10,6 +10,7 @@
     // initialize variables
     var total = 0;
     var memory = 0;
+    var history = [];
 
 
   /**
@@ -18,6 +19,7 @@
    * @return { Number }    current total
    */
     function doLoad(x){
+      addHistoryItem("load",x);
       validateNumber(x);
       total = x;
     return total;
@@ -39,6 +41,7 @@
    * @param { Number } x
    */
     function doAdd(x){
+      addHistoryItem("add",x);
       validateNumber(x);
       total += x;
     }
@@ -49,6 +52,7 @@
    * @param  { Number } x
    */
     function doSubtract(x){
+      addHistoryItem("subtract",x);
       validateNumber(x);
       total -= x;
     }
@@ -59,6 +63,7 @@
    * @param  { Number } x
    */
     function doMultiply(x){
+      addHistoryItem("multiply",x);
       validateNumber(x);
       total *= x;
     }
@@ -69,6 +74,7 @@
    * @param  { Number } x
    */
     function doDivide(x){
+      addHistoryItem("divide",x);
       validateNumber(x);
       total /= x;
     }
@@ -79,6 +85,7 @@
    * @return { Number }
    */
     function getMemory(){
+      addHistoryItem("recall", memory);
       return memory;
     }
 
@@ -87,6 +94,7 @@
    * Stores the value of `total` to `memory`
    */
     function totalToMemory(){
+      addHistoryItem("total to memory",total);
       memory = total;
     }
 
@@ -95,6 +103,7 @@
    * Clear the value stored at `memory`
    */
     function clearMem(){
+      addHistoryItem("clearMemory",memory);
       memory = 0;
     }
 
@@ -106,6 +115,19 @@
       if(typeof theNumber != "number"){
         throw Error('Error');
       }
+    }
+
+    function addHistoryItem(operation,theNumber){
+      var historyItem = {action:operation, input:theNumber};
+      history.push(historyItem);
+    }
+
+    function clearLastHistoryItem(){
+      history.pop();
+    }
+
+    function clearHistory(){
+      history = [];
     }
 
       //
